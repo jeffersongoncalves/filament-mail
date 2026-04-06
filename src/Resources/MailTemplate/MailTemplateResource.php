@@ -13,9 +13,12 @@ use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Schemas\MailTemplateF
 use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Schemas\MailTemplateInfolist;
 use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Tables\MailTemplatesTable;
 use JeffersonGoncalves\LaravelMail\Models\MailTemplate;
+use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 
 class MailTemplateResource extends Resource
 {
+    use Translatable;
+
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?int $navigationSort = 2;

@@ -6,16 +6,12 @@ namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Schemas;
 
 use Filament\Forms;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 class MailTemplateForm
 {
     public static function configure(Schema $schema): Schema
     {
-        $locales = config('filament-mail.template_editor.locales', ['en']);
-
         return $schema
             ->columns(null)
             ->components([
@@ -46,24 +42,18 @@ class MailTemplateForm
                     ]),
 
                 Section::make('Content')
+                    ->description('Use the locale switcher in the header to switch between languages.')
                     ->schema([
-                        Tabs::make('locale_tabs')
-                            ->tabs(
-                                collect($locales)->map(fn (string $locale) => Tab::make(strtoupper($locale))
-                                    ->schema([
-                                        Forms\Components\TextInput::make("translations.{$locale}.subject")
-                                            ->label('Subject')
-                                            ->required($locale === config('filament-mail.template_editor.default_locale', 'en')),
-                                        Forms\Components\Textarea::make("translations.{$locale}.html_body")
-                                            ->label('HTML Body')
-                                            ->required($locale === config('filament-mail.template_editor.default_locale', 'en'))
-                                            ->rows(15),
-                                        Forms\Components\Textarea::make("translations.{$locale}.text_body")
-                                            ->label('Plain Text Body')
-                                            ->rows(8),
-                                    ])
-                                )->all()
-                            ),
+                        Forms\Components\TextInput::make('subject')
+                            ->label('Subject')
+                            ->required(),
+                        Forms\Components\Textarea::make('html_body')
+                            ->label('HTML Body')
+                            ->required()
+                            ->rows(15),
+                        Forms\Components\Textarea::make('text_body')
+                            ->label('Plain Text Body')
+                            ->rows(8),
                     ]),
 
                 Section::make('Variables')

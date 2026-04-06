@@ -14,43 +14,25 @@ use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
 use JeffersonGoncalves\LaravelMail\Actions\PreviewTemplateAction;
 use JeffersonGoncalves\LaravelMail\Mail\TemplateNotificationMailable;
 use JeffersonGoncalves\LaravelMail\Models\MailTemplate;
+use LaraZeus\SpatieTranslatable\Actions\LocaleSwitcher;
+use LaraZeus\SpatieTranslatable\Resources\Pages\EditRecord\Concerns\Translatable;
 
 /**
  * @property MailTemplate $record
  */
 class EditMailTemplate extends EditRecord
 {
+    use Translatable;
+
     protected static string $resource = MailTemplateResource::class;
-
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        $record = $this->record;
-        $locales = config('filament-mail.template_editor.locales', ['en']);
-        $translations = [];
-
-        foreach ($locales as $locale) {
-            $translations[$locale] = [
-                'subject' => $record->getTranslations('subject')[$locale] ?? '',
-                'html_body' => $record->getTranslations('html_body')[$locale] ?? '',
-                'text_body' => $record->getTranslations('text_body')[$locale] ?? '',
-            ];
-        }
-
-        $data['translations'] = $translations;
-
-        return $data;
-    }
-
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        return CreateMailTemplate::processTranslations($data);
-    }
 
     protected function getHeaderActions(): array
     {
-        $locales = config('filament-mail.template_editor.locales', ['en']);
+        $locales = static::getResource()::getTranslatableLocales();
 
         return [
+            LocaleSwitcher::make(),
+
             Actions\Action::make('preview')
                 ->label('Preview')
                 ->icon('heroicon-o-eye')
@@ -76,7 +58,7 @@ class EditMailTemplate extends EditRecord
                     Select::make('locale')
                         ->label('Locale')
                         ->options(collect($locales)->mapWithKeys(fn ($l) => [$l => strtoupper($l)])->all())
-                        ->default(config('filament-mail.template_editor.default_locale', 'en')),
+                        ->default($locales[0] ?? 'en'),
                 ])
                 ->action(function (array $data) {
                     $exampleData = collect($this->record->variables ?? [])
