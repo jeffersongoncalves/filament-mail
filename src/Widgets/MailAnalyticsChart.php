@@ -13,7 +13,7 @@ class MailAnalyticsChart extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected ?string $heading = 'Email Analytics';
+    protected static ?string $heading = 'Email Analytics';
 
     protected static ?int $sort = 2;
 

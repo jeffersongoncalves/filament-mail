@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource;
 use JeffersonGoncalves\LaravelMail\Models\MailTemplate;
 
 it('can get the model class', function () {

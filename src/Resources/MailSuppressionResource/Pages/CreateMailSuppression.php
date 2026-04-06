@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace JeffersonGoncalves\FilamentMail\Resources\MailSuppression\Pages;
+namespace JeffersonGoncalves\FilamentMail\Resources\MailSuppressionResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use JeffersonGoncalves\FilamentMail\Resources\MailSuppression\MailSuppressionResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailSuppressionResource;
 
 class CreateMailSuppression extends CreateRecord
 {

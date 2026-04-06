@@ -2,16 +2,20 @@
 
 declare(strict_types=1);
 
-namespace JeffersonGoncalves\FilamentMail\Resources\MailLog\Pages;
+namespace JeffersonGoncalves\FilamentMail\Resources\MailLogResource\Pages;
 
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
-use JeffersonGoncalves\FilamentMail\Resources\MailLog\MailLogResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailLogResource;
 use JeffersonGoncalves\LaravelMail\Actions\ResendMailAction;
 use JeffersonGoncalves\LaravelMail\Actions\RetryFailedMailAction;
 use JeffersonGoncalves\LaravelMail\Enums\MailStatus;
+use JeffersonGoncalves\LaravelMail\Models\MailLog;
 
+/**
+ * @property MailLog $record
+ */
 class ViewMailLog extends ViewRecord
 {
     protected static string $resource = MailLogResource::class;

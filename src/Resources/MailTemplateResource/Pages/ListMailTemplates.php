@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Pages;
+namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource;
 
 class ListMailTemplates extends ListRecords
 {

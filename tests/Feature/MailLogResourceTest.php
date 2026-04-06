@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JeffersonGoncalves\FilamentMail\Resources\MailLog\MailLogResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailLogResource;
 use JeffersonGoncalves\LaravelMail\Models\MailLog;
 
 it('can get the model class', function () {

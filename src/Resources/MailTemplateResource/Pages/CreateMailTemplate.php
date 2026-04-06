@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Pages;
+namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
-use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource;
 
 class CreateMailTemplate extends CreateRecord
 {

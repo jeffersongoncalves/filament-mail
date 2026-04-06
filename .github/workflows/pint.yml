@@ -2,7 +2,7 @@ name: Fix PHP code style
 
 on:
   push:
-    branches: [3.x]
+    branches: [1.x]
 
 permissions:
   contents: write
@@ -20,7 +20,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 8.1
           coverage: none
 
       - name: Install dependencies

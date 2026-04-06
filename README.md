@@ -1,14 +1,14 @@
 <div class="filament-hidden">
 
-![Filament Mail](https://raw.githubusercontent.com/jeffersongoncalves/filament-mail/3.x/art/jeffersongoncalves-filament-mail.png)
+![Filament Mail](https://raw.githubusercontent.com/jeffersongoncalves/filament-mail/1.x/art/jeffersongoncalves-filament-mail.png)
 
 </div>
 
 # Filament Mail
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffersongoncalves/filament-mail.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-mail)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-mail/tests.yml?branch=3.x&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/filament-mail/actions)
-[![GitHub Code Style Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-mail/pint.yml?branch=3.x&label=code%20style&style=flat-square)](https://github.com/jeffersongoncalves/filament-mail/actions)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-mail/tests.yml?branch=1.x&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/filament-mail/actions)
+[![GitHub Code Style Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/filament-mail/pint.yml?branch=1.x&label=code%20style&style=flat-square)](https://github.com/jeffersongoncalves/filament-mail/actions)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffersongoncalves/filament-mail.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/filament-mail)
 
 Complete email management UI for Filament. Built on top of [jeffersongoncalves/laravel-mail](https://github.com/jeffersongoncalves/laravel-mail), it provides a rich interface for managing email logs, database templates with multi-locale editing, delivery tracking, analytics dashboard, and suppression management.

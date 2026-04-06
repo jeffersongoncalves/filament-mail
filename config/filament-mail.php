@@ -1,9 +1,9 @@
 <?php
 
 declare(strict_types=1);
-use JeffersonGoncalves\FilamentMail\Resources\MailLog\MailLogResource;
-use JeffersonGoncalves\FilamentMail\Resources\MailSuppression\MailSuppressionResource;
-use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailLogResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailSuppressionResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource;
 
 return [
 

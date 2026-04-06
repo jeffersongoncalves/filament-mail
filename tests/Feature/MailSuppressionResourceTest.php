@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JeffersonGoncalves\FilamentMail\Resources\MailSuppression\MailSuppressionResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailSuppressionResource;
 use JeffersonGoncalves\LaravelMail\Models\MailSuppression;
 
 it('can get the model class', function () {

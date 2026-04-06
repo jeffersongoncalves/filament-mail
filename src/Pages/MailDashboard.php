@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace JeffersonGoncalves\FilamentMail\Pages;
 
-use BackedEnum;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Form;
 use Filament\Pages\Dashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
-use Filament\Schemas\Schema;
 use JeffersonGoncalves\FilamentMail\FilamentMailPlugin;
 use JeffersonGoncalves\FilamentMail\Widgets\MailAnalyticsChart;
 use JeffersonGoncalves\FilamentMail\Widgets\MailDeliveryRateChart;
@@ -18,7 +17,7 @@ class MailDashboard extends Dashboard
 {
     use HasFiltersForm;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar-square';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar-square';
 
     protected static ?int $navigationSort = 0;
 
@@ -26,16 +25,16 @@ class MailDashboard extends Dashboard
 
     protected static ?string $slug = 'mail-dashboard';
 
-    protected string $view = 'filament-mail::pages.mail-dashboard';
+    protected static string $view = 'filament-mail::pages.mail-dashboard';
 
     public static function getNavigationGroup(): ?string
     {
         return FilamentMailPlugin::get()->getNavigationGroup();
     }
 
-    public function filtersForm(Schema $schema): Schema
+    public function filtersForm(Form $form): Form
     {
-        return $schema->components([
+        return $form->schema([
             Select::make('period')
                 ->label('Period')
                 ->options([

@@ -13,7 +13,7 @@ class MailDeliveryRateChart extends ChartWidget
 {
     use InteractsWithPageFilters;
 
-    protected ?string $heading = 'Delivery Rate';
+    protected static ?string $heading = 'Delivery Rate';
 
     protected static ?int $sort = 3;
 

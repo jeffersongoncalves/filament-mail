@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Pages;
+namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource\Pages;
 
 use Filament\Actions;
 use Filament\Forms\Components\Select;
@@ -10,7 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Support\Facades\Mail;
-use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource;
 use JeffersonGoncalves\LaravelMail\Actions\PreviewTemplateAction;
 use JeffersonGoncalves\LaravelMail\Mail\TemplateNotificationMailable;
 

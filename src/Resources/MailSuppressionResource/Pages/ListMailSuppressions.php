@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace JeffersonGoncalves\FilamentMail\Resources\MailSuppression\Pages;
+namespace JeffersonGoncalves\FilamentMail\Resources\MailSuppressionResource\Pages;
 
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
-use JeffersonGoncalves\FilamentMail\Resources\MailSuppression\MailSuppressionResource;
+use JeffersonGoncalves\FilamentMail\Resources\MailSuppressionResource;
 
 class ListMailSuppressions extends ListRecords
 {
