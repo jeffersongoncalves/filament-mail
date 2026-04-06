@@ -58,7 +58,78 @@ abstract class TestCase extends OrchestraTestCase
             $table->timestamps();
         });
 
-        // Run laravel-mail migrations
-        $this->artisan('migrate', ['--database' => 'testing'])->run();
+        Schema::create('mail_templates', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('key')->unique();
+            $table->string('name');
+            $table->string('mailable_class')->nullable();
+            $table->json('subject');
+            $table->json('html_body');
+            $table->json('text_body')->nullable();
+            $table->json('body_design')->nullable();
+            $table->json('variables')->nullable();
+            $table->string('layout')->nullable();
+            $table->string('tenant_id')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->timestamps();
+        });
+
+        Schema::create('mail_template_versions', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('mail_template_id')->constrained('mail_templates')->cascadeOnDelete();
+            $table->integer('version_number');
+            $table->json('subject');
+            $table->json('html_body');
+            $table->json('text_body')->nullable();
+            $table->json('body_design')->nullable();
+            $table->text('change_note')->nullable();
+            $table->string('author')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('mail_logs', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('status')->default('pending');
+            $table->string('mailer')->nullable();
+            $table->string('subject')->nullable();
+            $table->json('from')->nullable();
+            $table->json('to')->nullable();
+            $table->json('cc')->nullable();
+            $table->json('bcc')->nullable();
+            $table->json('reply_to')->nullable();
+            $table->longText('html_body')->nullable();
+            $table->longText('text_body')->nullable();
+            $table->json('headers')->nullable();
+            $table->json('attachments')->nullable();
+            $table->json('metadata')->nullable();
+            $table->string('provider_message_id')->nullable();
+            $table->foreignUuid('mail_template_id')->nullable()->constrained('mail_templates')->nullOnDelete();
+            $table->string('tenant_id')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('mail_suppressions', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('email');
+            $table->string('reason')->default('manual');
+            $table->string('provider')->nullable();
+            $table->foreignUuid('mail_log_id')->nullable()->constrained('mail_logs')->nullOnDelete();
+            $table->string('tenant_id')->nullable();
+            $table->timestamp('suppressed_at')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('mail_tracking_events', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('mail_log_id')->constrained('mail_logs')->cascadeOnDelete();
+            $table->string('type');
+            $table->string('provider');
+            $table->string('recipient')->nullable();
+            $table->string('bounce_type')->nullable();
+            $table->text('url')->nullable();
+            $table->json('metadata')->nullable();
+            $table->timestamp('occurred_at')->nullable();
+            $table->timestamps();
+        });
     }
 }

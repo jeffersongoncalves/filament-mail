@@ -6,6 +6,9 @@ namespace JeffersonGoncalves\FilamentMail;
 
 use Filament\Support\Assets\Css;
 use Filament\Support\Facades\FilamentAsset;
+use JeffersonGoncalves\FilamentMail\Contracts\TemplateEditorContract;
+use JeffersonGoncalves\FilamentMail\Editors\RichEditorDriver;
+use JeffersonGoncalves\FilamentMail\Editors\UnlayerEditorDriver;
 use JeffersonGoncalves\FilamentMail\Livewire\MailPreview;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -21,7 +24,20 @@ class FilamentMailServiceProvider extends PackageServiceProvider
             ->name(static::$name)
             ->hasConfigFile()
             ->hasViews()
-            ->hasTranslations();
+            ->hasTranslations()
+            ->hasMigration('add_body_design_to_mail_templates_table');
+    }
+
+    public function register(): void
+    {
+        parent::register();
+
+        $this->app->bind(TemplateEditorContract::class, function () {
+            return match (config('filament-mail.template_editor.driver')) {
+                'unlayer' => new UnlayerEditorDriver,
+                default => new RichEditorDriver,
+            };
+        });
     }
 
     public function packageBooted(): void

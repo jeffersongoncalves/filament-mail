@@ -47,3 +47,6 @@ parameters:
         -
             message: '#Cannot call method .+ on Illuminate\\Database\\Eloquent\\Model\|int\|string#'
             reportUnmatched: false
+        -
+            message: '#Trait .+ is used zero times and is not analysed#'
+            reportUnmatched: false

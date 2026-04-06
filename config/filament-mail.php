@@ -91,8 +91,11 @@ return [
     */
 
     'template_editor' => [
+        'driver' => env('FILAMENT_MAIL_EDITOR', 'rich_editor'),
         'locales' => ['en'],
         'default_locale' => 'en',
+        'unlayer_project_id' => env('UNLAYER_PROJECT_ID'),
+        'merge_tags' => [],
     ],
 
     /*

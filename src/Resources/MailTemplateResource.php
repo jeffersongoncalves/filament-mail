@@ -14,6 +14,7 @@ use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use JeffersonGoncalves\FilamentMail\Contracts\TemplateEditorContract;
 use JeffersonGoncalves\FilamentMail\FilamentMailPlugin;
 use JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource\Pages;
 use JeffersonGoncalves\LaravelMail\Models\MailTemplate;
@@ -81,10 +82,8 @@ class MailTemplateResource extends Resource
                         Forms\Components\TextInput::make('subject')
                             ->label('Subject')
                             ->required(),
-                        Forms\Components\Textarea::make('html_body')
-                            ->label('HTML Body')
-                            ->required()
-                            ->rows(15),
+                        app(TemplateEditorContract::class)
+                            ->getFormField('html_body'),
                         Forms\Components\Textarea::make('text_body')
                             ->label('Plain Text Body')
                             ->rows(8),
