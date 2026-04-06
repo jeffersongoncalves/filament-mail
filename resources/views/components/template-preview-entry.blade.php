@@ -13,9 +13,9 @@
     }
 @endphp
 
-<div class="space-y-3">
+<div class="fi-mail-space-y-3">
     @if($subject)
-        <div class="text-sm">
+        <div class="fi-mail-subject">
             <strong>Subject:</strong> {{ $subject }}
         </div>
     @endif
@@ -23,14 +23,14 @@
     @if($html)
         <iframe
             srcdoc="{{ e($html) }}"
-            class="w-full border rounded-lg bg-white"
+            class="fi-mail-preview-iframe"
             style="min-height: 400px; max-width: {{ config('filament-mail.preview.max_width', '800px') }};"
             @if(config('filament-mail.preview.sandbox', true))
                 sandbox="allow-same-origin"
             @endif
         ></iframe>
     @else
-        <p class="text-sm text-gray-500 dark:text-gray-400 italic">
+        <p class="fi-mail-empty">
             No content available for this locale. Make sure the template has content and the locale is configured.
         </p>
     @endif

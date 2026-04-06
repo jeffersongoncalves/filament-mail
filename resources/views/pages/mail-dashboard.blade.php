@@ -12,7 +12,7 @@
         :widgets="$this->getVisibleWidgets()"
     />
 
-    <div class="grid gap-6 md:grid-cols-2">
+    <div class="fi-mail-dashboard-grid">
         {{-- Recent Emails --}}
         <x-filament::section>
             <x-slot name="heading">Recent Emails</x-slot>
@@ -22,20 +22,20 @@
                 $recentLogs = $modelClass::query()->latest()->limit(10)->get();
             @endphp
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                    <thead class="text-xs text-gray-500 uppercase">
+            <div class="fi-mail-table-wrap">
+                <table class="fi-mail-table-sm">
+                    <thead>
                         <tr>
-                            <th class="px-3 py-2">Status</th>
-                            <th class="px-3 py-2">Subject</th>
-                            <th class="px-3 py-2">To</th>
-                            <th class="px-3 py-2">Date</th>
+                            <th>Status</th>
+                            <th>Subject</th>
+                            <th>To</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($recentLogs as $log)
-                            <tr class="border-b dark:border-gray-700">
-                                <td class="px-3 py-2">
+                            <tr>
+                                <td>
                                     @php
                                         $statusColor = match($log->status->value) {
                                             'pending' => 'gray',
@@ -51,13 +51,13 @@
                                         {{ ucfirst($log->status->value) }}
                                     </x-filament::badge>
                                 </td>
-                                <td class="px-3 py-2">{{ Str::limit($log->subject, 40) }}</td>
-                                <td class="px-3 py-2">{{ $log->to[0]['email'] ?? '—' }}</td>
-                                <td class="px-3 py-2 text-gray-500">{{ $log->created_at->diffForHumans() }}</td>
+                                <td>{{ Str::limit($log->subject, 40) }}</td>
+                                <td>{{ $log->to[0]['email'] ?? '—' }}</td>
+                                <td class="fi-mail-cell-muted">{{ $log->created_at->diffForHumans() }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-3 py-4 text-center text-gray-500 italic">No emails found.</td>
+                                <td colspan="4" class="fi-mail-empty" style="text-align: center; padding: 1rem 0.75rem;">No emails found.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -78,31 +78,31 @@
                     ->get();
             @endphp
 
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left">
-                    <thead class="text-xs text-gray-500 uppercase">
+            <div class="fi-mail-table-wrap">
+                <table class="fi-mail-table-sm">
+                    <thead>
                         <tr>
-                            <th class="px-3 py-2">Status</th>
-                            <th class="px-3 py-2">Subject</th>
-                            <th class="px-3 py-2">To</th>
-                            <th class="px-3 py-2">Date</th>
+                            <th>Status</th>
+                            <th>Subject</th>
+                            <th>To</th>
+                            <th>Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($recentIssues as $log)
-                            <tr class="border-b dark:border-gray-700">
-                                <td class="px-3 py-2">
+                            <tr>
+                                <td>
                                     <x-filament::badge :color="$log->status->value === 'bounced' ? 'danger' : 'warning'" size="sm">
                                         {{ ucfirst($log->status->value) }}
                                     </x-filament::badge>
                                 </td>
-                                <td class="px-3 py-2">{{ Str::limit($log->subject, 40) }}</td>
-                                <td class="px-3 py-2">{{ $log->to[0]['email'] ?? '—' }}</td>
-                                <td class="px-3 py-2 text-gray-500">{{ $log->created_at->diffForHumans() }}</td>
+                                <td>{{ Str::limit($log->subject, 40) }}</td>
+                                <td>{{ $log->to[0]['email'] ?? '—' }}</td>
+                                <td class="fi-mail-cell-muted">{{ $log->created_at->diffForHumans() }}</td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-3 py-4 text-center text-gray-500 italic">No bounces or complaints.</td>
+                                <td colspan="4" class="fi-mail-empty" style="text-align: center; padding: 1rem 0.75rem;">No bounces or complaints.</td>
                             </tr>
                         @endforelse
                     </tbody>

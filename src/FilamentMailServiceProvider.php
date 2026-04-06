@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace JeffersonGoncalves\FilamentMail;
 
+use Filament\Support\Assets\Css;
+use Filament\Support\Facades\FilamentAsset;
 use JeffersonGoncalves\FilamentMail\Livewire\MailPreview;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -24,6 +26,10 @@ class FilamentMailServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        FilamentAsset::register([
+            Css::make('filament-mail-styles', __DIR__.'/../resources/dist/filament-mail.css'),
+        ], 'jeffersongoncalves/filament-mail');
+
         Livewire::component('filament-mail::mail-preview', MailPreview::class);
     }
 }
