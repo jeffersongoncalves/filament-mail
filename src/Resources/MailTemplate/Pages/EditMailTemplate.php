@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Mail;
 use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
 use JeffersonGoncalves\LaravelMail\Actions\PreviewTemplateAction;
 use JeffersonGoncalves\LaravelMail\Mail\TemplateNotificationMailable;
+use JeffersonGoncalves\LaravelMail\Models\MailTemplate;
 
+/**
+ * @property MailTemplate $record
+ */
 class EditMailTemplate extends EditRecord
 {
     protected static string $resource = MailTemplateResource::class;
@@ -76,7 +80,7 @@ class EditMailTemplate extends EditRecord
                 ])
                 ->action(function (array $data) {
                     $exampleData = collect($this->record->variables ?? [])
-                        ->mapWithKeys(fn ($var) => [$var['name'] => $var['example'] ?? ''])
+                        ->mapWithKeys(fn (array $var) => [$var['name'] => $var['example']])
                         ->all();
 
                     if (! empty($data['locale'])) {

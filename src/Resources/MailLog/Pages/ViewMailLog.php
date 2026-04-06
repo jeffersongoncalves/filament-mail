@@ -11,7 +11,11 @@ use JeffersonGoncalves\FilamentMail\Resources\MailLog\MailLogResource;
 use JeffersonGoncalves\LaravelMail\Actions\ResendMailAction;
 use JeffersonGoncalves\LaravelMail\Actions\RetryFailedMailAction;
 use JeffersonGoncalves\LaravelMail\Enums\MailStatus;
+use JeffersonGoncalves\LaravelMail\Models\MailLog;
 
+/**
+ * @property MailLog $record
+ */
 class ViewMailLog extends ViewRecord
 {
     protected static string $resource = MailLogResource::class;
