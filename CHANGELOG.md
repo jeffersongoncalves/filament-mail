@@ -2,6 +2,12 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 1.1.1 - 2026-04-06
+
+### Fixed
+
+- Fix MailDashboard extending Dashboard causing route conflict with main dashboard (RouteNotFoundException for filament.admin.pages.dashboard)
+
 ## 1.1.0 - 2026-04-06
 
 ### What's Changed
