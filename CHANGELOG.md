@@ -2,6 +2,14 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 1.3.1 - 2026-04-06
+
+### Documentation
+
+- Add Template Editor section to README (driver config, Unlayer setup, custom drivers)
+- Add MailNotification section to README (usage examples, HasMailTemplate trait)
+- Add Laravel Boost guidelines and skills for AI-assisted development
+
 ## 1.3.0 - 2026-04-06
 
 ### Added
