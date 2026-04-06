@@ -49,9 +49,6 @@ class MailTemplateForm
                             ->label('Subject')
                             ->required(),
                         app(TemplateEditorContract::class)->getFormField('html_body'),
-                        Forms\Components\Textarea::make('text_body')
-                            ->label('Plain Text Body')
-                            ->rows(8),
                     ]),
 
                 Section::make('Variables')
