@@ -65,12 +65,6 @@ class MailTemplateResource extends Resource
                         Forms\Components\Toggle::make('is_active')
                             ->label('Active')
                             ->default(true),
-                        Forms\Components\TextInput::make('layout')
-                            ->label('Layout')
-                            ->placeholder('emails.layout')
-                            ->helperText('Blade layout to wrap the template content')
-                            ->maxLength(255)
-                            ->columnSpanFull(),
                     ]),
 
                 Section::make('Content')
@@ -181,8 +175,6 @@ class MailTemplateResource extends Resource
                             ->badge()
                             ->color(fn (bool $state) => $state ? 'success' : 'gray')
                             ->formatStateUsing(fn (bool $state) => $state ? 'Yes' : 'No'),
-                        TextEntry::make('layout')
-                            ->placeholder('—'),
                     ]),
 
                 \Filament\Infolists\Components\Section::make('Preview')
