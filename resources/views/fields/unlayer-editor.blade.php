@@ -1,43 +1,63 @@
 @once
-    <script src="https://editor.unlayer.com/embed.js" defer></script>
+    <script src="https://editor.unlayer.com/embed.js"></script>
 @endonce
 
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
 >
+    @php
+        $statePath = $getStatePath();
+        $projectId = $getProjectId();
+        $mergeTags = $getMergeTags();
+
+        // body_design lives as a sibling field — derive its path
+        $pathParts = explode('.', $statePath);
+        array_pop($pathParts);
+        $designPath = implode('.', array_merge($pathParts, ['body_design']));
+    @endphp
+
     <div
         x-data="{
-            state: $wire.$entangle('{{ $getStatePath() }}'),
-            designState: $wire.$entangle('{{ $getStatePath('body_design') }}'),
+            state: $wire.$entangle('{{ $statePath }}'),
+            designState: $wire.$entangle('{{ $designPath }}'),
             editor: null,
+            ready: false,
 
             init() {
-                this.$nextTick(() => {
-                    this.initEditor();
-                });
+                this.$nextTick(() => this.waitForUnlayer());
+            },
+
+            waitForUnlayer() {
+                if (typeof unlayer === 'undefined' || typeof unlayer.init !== 'function') {
+                    setTimeout(() => this.waitForUnlayer(), 300);
+                    return;
+                }
+                this.initEditor();
             },
 
             initEditor() {
                 const container = this.$refs.editorContainer;
-                if (!container || typeof unlayer === 'undefined') {
-                    setTimeout(() => this.initEditor(), 200);
-                    return;
-                }
+                if (!container) return;
 
                 const isDark = document.documentElement.classList.contains('dark');
 
-                unlayer.init({
+                const options = {
                     id: container.id,
-                    projectId: {{ $getProjectId() ? $getProjectId() : 'undefined' }},
                     displayMode: 'email',
                     appearance: {
                         theme: isDark ? 'modern_dark' : 'modern_light',
                     },
-                    mergeTags: @js($getMergeTags()),
-                });
+                    mergeTags: @js($mergeTags),
+                };
 
+                @if($projectId)
+                    options.projectId = @js($projectId);
+                @endif
+
+                unlayer.init(options);
                 this.editor = unlayer;
+                this.ready = true;
 
                 // Load existing design
                 const design = this.designState;
@@ -46,7 +66,7 @@
                         const parsed = typeof design === 'string' ? JSON.parse(design) : design;
                         unlayer.loadDesign(parsed);
                     } catch (e) {
-                        console.warn('Failed to load Unlayer design:', e);
+                        console.warn('Filament Mail: Failed to load Unlayer design', e);
                     }
                 }
 
@@ -57,7 +77,7 @@
             },
 
             exportContent() {
-                if (!this.editor) return;
+                if (!this.ready) return;
 
                 this.editor.exportHtml((data) => {
                     this.state = data.html;
