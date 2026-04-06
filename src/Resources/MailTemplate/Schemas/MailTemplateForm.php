@@ -30,12 +30,6 @@ class MailTemplateForm
                         Forms\Components\Toggle::make('is_active')
                             ->label('Active')
                             ->default(true),
-                        Forms\Components\TextInput::make('layout')
-                            ->label('Layout')
-                            ->placeholder('emails.layout')
-                            ->helperText('Blade layout to wrap the template content')
-                            ->maxLength(255)
-                            ->columnSpanFull(),
                     ]),
 
                 Section::make('Content')

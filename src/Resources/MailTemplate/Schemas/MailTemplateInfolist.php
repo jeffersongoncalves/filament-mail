@@ -30,8 +30,6 @@ class MailTemplateInfolist
                             ->badge()
                             ->color(fn (bool $state) => $state ? 'success' : 'gray')
                             ->formatStateUsing(fn (bool $state) => $state ? 'Yes' : 'No'),
-                        TextEntry::make('layout')
-                            ->placeholder('—'),
                     ]),
 
                 Section::make('Preview by Locale')
