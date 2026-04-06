@@ -2,6 +2,12 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 1.3.2 - 2026-04-06
+
+### Fixed
+
+- Escape Blade syntax in boost guidelines to prevent compilation error
+
 ## 1.3.1 - 2026-04-06
 
 ### Documentation
