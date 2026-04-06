@@ -60,15 +60,22 @@ Register the plugin in your Filament panel provider:
 
 ```php
 use JeffersonGoncalves\FilamentMail\FilamentMailPlugin;
+use LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin;
 
 public function panel(Panel $panel): Panel
 {
     return $panel
         ->plugins([
             FilamentMailPlugin::make(),
+
+            // Required for multi-locale template editing
+            SpatieTranslatablePlugin::make()
+                ->defaultLocales(['en', 'pt_BR', 'es']),
         ]);
 }
 ```
+
+The `SpatieTranslatablePlugin` is required for multi-locale template editing. It provides a locale switcher in the header of all template pages (create, edit, view, list). Configure the locales you need in the `defaultLocales()` method.
 
 ### Customization
 
