@@ -1,0 +1,163 @@
+/*
+ * Filament Mail — Custom Styles
+ * Uses Filament CSS custom properties for theme integration.
+ */
+
+/* ─── Table ─────────────────────────────────────────────────────────── */
+
+.fi-mail-table-wrap {
+    overflow-x: auto;
+}
+
+.fi-mail-table {
+    width: 100%;
+    font-size: 0.875rem;
+    text-align: left;
+
+    & thead {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: rgba(var(--gray-500), 1);
+        background-color: rgba(var(--gray-50), 1);
+    }
+
+    & th,
+    & td {
+        padding: 0.5rem 1rem;
+    }
+
+    & tbody tr {
+        border-bottom: 1px solid rgba(var(--gray-200), 1);
+    }
+
+    & .fi-mail-mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.875rem;
+    }
+
+    & .fi-mail-cell-muted {
+        color: rgba(var(--gray-500), 1);
+    }
+
+    & .fi-mail-cell-bold {
+        font-weight: 500;
+    }
+}
+
+.fi-mail-table-sm {
+    width: 100%;
+    font-size: 0.875rem;
+    text-align: left;
+
+    & thead {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: rgba(var(--gray-500), 1);
+    }
+
+    & th,
+    & td {
+        padding: 0.5rem 0.75rem;
+    }
+
+    & tbody tr {
+        border-bottom: 1px solid rgba(var(--gray-200), 1);
+    }
+
+    & .fi-mail-cell-muted {
+        color: rgba(var(--gray-500), 1);
+    }
+}
+
+/* ─── Dark mode tables ──────────────────────────────────────────────── */
+
+.dark {
+    & .fi-mail-table thead {
+        background-color: rgba(var(--gray-800), 1);
+        color: rgba(var(--gray-400), 1);
+    }
+
+    & .fi-mail-table tbody tr,
+    & .fi-mail-table-sm tbody tr {
+        border-bottom-color: rgba(var(--gray-700), 1);
+    }
+}
+
+/* ─── Dashboard grid ────────────────────────────────────────────────── */
+
+.fi-mail-dashboard-grid {
+    display: grid;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ─── Preview iframe ────────────────────────────────────────────────── */
+
+.fi-mail-preview-iframe {
+    width: 100%;
+    border: 1px solid rgba(var(--gray-200), 1);
+    border-radius: 0.5rem;
+    background-color: #fff;
+}
+
+/* ─── Text styles ───────────────────────────────────────────────────── */
+
+.fi-mail-subject {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(var(--gray-700), 1);
+}
+
+.dark .fi-mail-subject {
+    color: rgba(var(--gray-300), 1);
+}
+
+.fi-mail-empty {
+    font-size: 0.875rem;
+    font-style: italic;
+    color: rgba(var(--gray-500), 1);
+}
+
+.dark .fi-mail-empty {
+    color: rgba(var(--gray-400), 1);
+}
+
+.fi-mail-muted {
+    color: rgba(var(--gray-400), 1);
+}
+
+/* ─── Links ─────────────────────────────────────────────────────────── */
+
+.fi-mail-link {
+    color: rgba(var(--primary-600), 1);
+
+    &:hover {
+        color: rgba(var(--primary-500), 1);
+    }
+}
+
+.dark .fi-mail-link {
+    color: rgba(var(--primary-400), 1);
+}
+
+.fi-mail-link-underline {
+    color: rgba(var(--primary-600), 1);
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* ─── Spacing utilities ─────────────────────────────────────────────── */
+
+.fi-mail-space-y-3 > * + * {
+    margin-top: 0.75rem;
+}
+
+.fi-mail-space-y-4 > * + * {
+    margin-top: 1rem;
+}
