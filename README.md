@@ -26,6 +26,8 @@ Complete email management UI for Filament. Built on top of [jeffersongoncalves/l
 - **Mail Logs** — Browse, search, and view all sent emails with HTML preview, attachments, headers, and metadata
 - **Resend & Retry** — Resend any email or retry failed deliveries directly from the UI
 - **Mail Templates** — Create and edit database-driven email templates with multi-locale support (via spatie/laravel-translatable)
+- **Swappable Template Editor** — Use Filament RichEditor (default) or Unlayer visual drag-and-drop editor
+- **MailNotification** — Send template-based notifications with variable binding, cc, bcc, attachments
 - **Template Versioning** — Automatic version history with change tracking
 - **Live Preview** — Preview rendered templates with example data in an iframe sandbox
 - **Send Test Email** — Send test emails from any template with locale selection
@@ -143,8 +145,11 @@ return [
     ],
 
     'template_editor' => [
+        'driver' => env('FILAMENT_MAIL_EDITOR', 'rich_editor'),
         'locales' => ['en'],
         'default_locale' => 'en',
+        'unlayer_project_id' => env('UNLAYER_PROJECT_ID'),
+        'merge_tags' => [],
     ],
 
     'preview' => [
@@ -154,6 +159,121 @@ return [
 
     'tenant_scoping' => false,
 ];
+```
+
+## Template Editor
+
+The template editor is swappable via config. Set the `FILAMENT_MAIL_EDITOR` environment variable:
+
+```env
+# Default: standard Filament RichEditor
+FILAMENT_MAIL_EDITOR=rich_editor
+
+# Visual drag-and-drop editor via Unlayer
+FILAMENT_MAIL_EDITOR=unlayer
+UNLAYER_PROJECT_ID=your-project-id
+```
+
+When using Unlayer, publish and run the migration for the `body_design` column:
+
+```bash
+php artisan vendor:publish --tag="filament-mail-migrations"
+php artisan migrate
+```
+
+### Creating a Custom Editor Driver
+
+Implement `TemplateEditorContract` and bind it in a service provider:
+
+```php
+use JeffersonGoncalves\FilamentMail\Contracts\TemplateEditorContract;
+
+class MyEditorDriver implements TemplateEditorContract
+{
+    public function getFormField(string $fieldName = 'html_body'): Component
+    {
+        return MyCustomField::make($fieldName)->columnSpanFull();
+    }
+
+    public function render(string $content, array $variables): string
+    {
+        foreach ($variables as $key => $value) {
+            $content = str_replace(
+                ['{{' . $key . '}}', '{{ ' . $key . ' }}'],
+                (string) $value,
+                $content
+            );
+        }
+        return $content;
+    }
+}
+
+// In a service provider:
+$this->app->bind(TemplateEditorContract::class, MyEditorDriver::class);
+```
+
+## MailNotification
+
+Send emails using database templates with variable binding:
+
+```php
+use JeffersonGoncalves\FilamentMail\Notifications\MailNotification;
+
+// Simple notification
+$user->notify(new MailNotification(
+    templateKey: 'auth.welcome',
+    variables: [
+        'name' => $user->name,
+        'login_url' => route('login'),
+    ],
+));
+
+// With locale, cc, and attachments
+$user->notify(new MailNotification(
+    templateKey: 'transactional.invoice',
+    variables: [
+        'invoice_number' => $invoice->number,
+        'total' => number_format($invoice->total, 2, ',', '.'),
+        'due_date' => $invoice->due_date->format('d/m/Y'),
+    ],
+    metadata: [
+        'locale' => 'pt_BR',
+        'cc' => ['finance@company.com'],
+        'attachments' => [storage_path("invoices/{$invoice->number}.pdf")],
+    ],
+));
+
+// Without a notifiable (via Notification facade)
+use Illuminate\Support\Facades\Notification;
+
+Notification::route('mail', $email)->notify(
+    new MailNotification('auth.reset-password', ['url' => $resetUrl])
+);
+```
+
+### HasMailTemplate Trait
+
+For traditional Mailables, use the `HasMailTemplate` trait:
+
+```php
+use JeffersonGoncalves\FilamentMail\Traits\HasMailTemplate;
+use Illuminate\Mail\Mailable;
+
+class WelcomeMail extends Mailable
+{
+    use HasMailTemplate;
+
+    public function __construct(User $user)
+    {
+        $this->templateKey = 'auth.welcome';
+        $this->templateVariables = ['name' => $user->name];
+    }
+
+    public function build(): static
+    {
+        return $this->buildContent();
+    }
+}
 ```
 
 ## Extending Resources
