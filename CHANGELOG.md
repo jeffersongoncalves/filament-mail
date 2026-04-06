@@ -2,6 +2,25 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 2.1.0 - 2026-04-06
+
+### What's Changed
+
+#### Added
+
+- Integrated `lara-zeus/spatie-translatable` for native locale switching on mail templates
+- LocaleSwitcher action on all template pages (list, create, edit, view)
+- SpatieTranslatablePlugin setup documentation in README
+
+#### Changed
+
+- Simplified template form: direct `subject`, `html_body`, `text_body` fields (plugin handles locale switching)
+- Removed manual locale tabs and `processTranslations()` logic
+
+#### Requirements
+
+- `lara-zeus/spatie-translatable` ^1.0 (Filament v4)
+
 ## 2.0.0 - 2026-04-06
 
 ### Initial Release (Filament v4)
