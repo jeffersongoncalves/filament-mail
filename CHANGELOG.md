@@ -2,6 +2,12 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 2.3.3 - 2026-04-06
+
+### Fixed
+
+- Fix Unlayer editor not loading: remove defer from embed.js, fix state path for body_design, build options as PHP array to avoid Blade-in-Alpine conflicts
+
 ## 2.3.2 - 2026-04-06
 
 ### Fixed
