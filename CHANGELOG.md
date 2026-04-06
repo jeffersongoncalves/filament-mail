@@ -2,6 +2,14 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 2.3.4 - 2026-04-06
+
+### Fixed
+
+- Fix Unlayer editor iframe not filling container height (display grid + 700px)
+- Fix DataCloneError on design export (wrap in try/catch with deep clone)
+- Remove Plain Text Body field from template form
+
 ## 2.3.3 - 2026-04-06
 
 ### Fixed
