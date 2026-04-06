@@ -14,7 +14,6 @@ use JeffersonGoncalves\FilamentMail\Resources\MailTemplate\MailTemplateResource;
 use JeffersonGoncalves\FilamentMail\Widgets\MailAnalyticsChart;
 use JeffersonGoncalves\FilamentMail\Widgets\MailDeliveryRateChart;
 use JeffersonGoncalves\FilamentMail\Widgets\MailStatsOverview;
-use LaraZeus\SpatieTranslatable\SpatieTranslatablePlugin;
 
 class FilamentMailPlugin implements Plugin
 {
@@ -76,13 +75,6 @@ class FilamentMailPlugin implements Plugin
             if (config('filament-mail.widgets.delivery_rate_chart', true)) {
                 $widgets[] = MailDeliveryRateChart::class;
             }
-        }
-
-        if (! $panel->hasPlugin('spatie-translatable')) {
-            $panel->plugin(
-                SpatieTranslatablePlugin::make()
-                    ->defaultLocales(config('filament-mail.template_editor.locales', ['en']))
-            );
         }
 
         $panel
