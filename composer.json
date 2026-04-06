@@ -28,7 +28,7 @@
         "php": "^8.2",
         "filament/filament": "^4.0",
         "jeffersongoncalves/laravel-mail": "^1.2",
-        "lara-zeus/spatie-translatable": "^2.0",
+        "lara-zeus/spatie-translatable": "^1.0",
         "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
