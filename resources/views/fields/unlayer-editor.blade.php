@@ -81,13 +81,17 @@
             exportContent() {
                 if (!this.ready) return;
 
-                this.editor.exportHtml((data) => {
-                    this.state = data.html;
-                });
+                try {
+                    this.editor.exportHtml((data) => {
+                        this.state = data.html;
+                    });
+                } catch (e) {}
 
-                this.editor.saveDesign((design) => {
-                    this.designState = JSON.stringify(design);
-                });
+                try {
+                    this.editor.saveDesign((design) => {
+                        this.designState = JSON.stringify(JSON.parse(JSON.stringify(design)));
+                    });
+                } catch (e) {}
             },
         }"
         x-on:submit.prevent="exportContent()"
@@ -96,7 +100,7 @@
         <div
             x-ref="editorContainer"
             id="unlayer-editor-{{ $getId() }}"
-            style="min-height: 600px;"
+            style="height: 700px;"
         ></div>
     </div>
 </x-dynamic-component>
