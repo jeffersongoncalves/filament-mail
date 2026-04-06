@@ -111,6 +111,6 @@ public function panel(Panel $panel): Panel
 ### Best Practices
 
 - Always use `MailNotification` for template-based emails instead of raw `Mail::send()`
-- Use merge tags (`{{variable}}`) in templates for dynamic content
+- Use merge tags (`@{{ variable }}`) in templates for dynamic content
 - Set `FILAMENT_MAIL_EDITOR=unlayer` for visual email design, `rich_editor` for simple HTML
 - Publish the migration for `body_design` column when using Unlayer: `php artisan vendor:publish --tag="filament-mail-migrations"`
