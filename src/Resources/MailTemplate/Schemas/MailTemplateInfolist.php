@@ -30,9 +30,6 @@ class MailTemplateInfolist
                             ->badge()
                             ->color(fn (bool $state) => $state ? 'success' : 'gray')
                             ->formatStateUsing(fn (bool $state) => $state ? 'Yes' : 'No'),
-                        TextEntry::make('mailable_class')
-                            ->label('Mailable Class')
-                            ->placeholder('—'),
                         TextEntry::make('layout')
                             ->placeholder('—'),
                     ]),

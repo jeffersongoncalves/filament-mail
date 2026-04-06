@@ -27,10 +27,6 @@ class MailTemplateForm
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('mailable_class')
-                            ->label('Mailable Class')
-                            ->placeholder('App\\Mail\\WelcomeMail')
-                            ->maxLength(255),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Active')
                             ->default(true),
