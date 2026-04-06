@@ -2,6 +2,15 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 2.2.0 - 2026-04-06
+
+### Changed
+
+- Replace Tailwind CSS classes with custom CSS using `fi-mail-*` prefix
+- Add PostCSS + cssnano build pipeline for CSS compilation
+- Register compiled CSS asset via FilamentAsset in ServiceProvider
+- Uses Filament CSS custom properties for theme integration and dark mode
+
 ## 2.1.1 - 2026-04-06
 
 ### Fixed
