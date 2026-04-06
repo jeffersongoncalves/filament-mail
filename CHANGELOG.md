@@ -2,6 +2,21 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 2.3.0 - 2026-04-06
+
+### Added
+
+- Swappable template editor via `TemplateEditorContract` (config: `filament-mail.template_editor.driver`)
+- `RichEditorDriver` (default) — standard Filament RichEditor
+- `UnlayerEditorDriver` — visual drag-and-drop email editor via Unlayer CDN
+- `UnlayerField` custom Filament component with Alpine.js integration
+- `MailNotification` class for sending template-based notifications with variable binding
+- `HasMailTemplate` trait for Mailable integration
+- `body_design` migration for storing Unlayer JSON designs
+- Email template view (`emails.template`) for notification rendering
+- Config options: `driver`, `unlayer_project_id`, `merge_tags`
+- Comprehensive tests for editors and notifications (37 tests)
+
 ## 2.2.0 - 2026-04-06
 
 ### Changed
