@@ -2,6 +2,13 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 2.3.5 - 2026-04-06
+
+### Changed
+
+- Remove Mailable Class field from template form and infolist
+- Remove Layout field from template form and infolist
+
 ## 2.3.4 - 2026-04-06
 
 ### Fixed
