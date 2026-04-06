@@ -62,10 +62,6 @@ class MailTemplateResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('mailable_class')
-                            ->label('Mailable Class')
-                            ->placeholder('App\\Mail\\WelcomeMail')
-                            ->maxLength(255),
                         Forms\Components\Toggle::make('is_active')
                             ->label('Active')
                             ->default(true),
@@ -185,9 +181,6 @@ class MailTemplateResource extends Resource
                             ->badge()
                             ->color(fn (bool $state) => $state ? 'success' : 'gray')
                             ->formatStateUsing(fn (bool $state) => $state ? 'Yes' : 'No'),
-                        TextEntry::make('mailable_class')
-                            ->label('Mailable Class')
-                            ->placeholder('—'),
                         TextEntry::make('layout')
                             ->placeholder('—'),
                     ]),
