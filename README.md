@@ -70,6 +70,29 @@ public function panel(Panel $panel): Panel
 }
 ```
 
+### Translatable Templates (Multi-locale)
+
+Mail templates use [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable) for multi-locale support. The plugin integrates with Filament's official [Spatie Laravel Translatable Plugin](https://filamentphp.com/plugins/filament-spatie-laravel-translatable-plugin) to provide a locale switcher in the UI.
+
+Register the `SpatieLaravelTranslatablePlugin` alongside `FilamentMailPlugin` in your panel:
+
+```php
+use Filament\SpatieLaravelTranslatablePlugin;
+use JeffersonGoncalves\FilamentMail\FilamentMailPlugin;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        ->plugins([
+            SpatieLaravelTranslatablePlugin::make()
+                ->defaultLocales(['en', 'pt_BR', 'es']),
+            FilamentMailPlugin::make(),
+        ]);
+}
+```
+
+The `subject`, `html_body`, and `text_body` fields on mail templates are translatable. Use the locale switcher in the header to switch between locales when creating or editing templates.
+
 ### Customization
 
 ```php

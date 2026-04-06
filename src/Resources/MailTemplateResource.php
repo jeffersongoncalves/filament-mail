@@ -6,12 +6,11 @@ namespace JeffersonGoncalves\FilamentMail\Resources;
 
 use Filament\Forms;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\Tabs\Tab;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ViewEntry;
 use Filament\Infolists\Infolist;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -21,6 +20,8 @@ use JeffersonGoncalves\LaravelMail\Models\MailTemplate;
 
 class MailTemplateResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?int $navigationSort = 2;
@@ -47,8 +48,6 @@ class MailTemplateResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $locales = config('filament-mail.template_editor.locales', ['en']);
-
         return $form
             ->schema([
                 Section::make('General')
@@ -79,23 +78,16 @@ class MailTemplateResource extends Resource
 
                 Section::make('Content')
                     ->schema([
-                        Tabs::make('locale_tabs')
-                            ->tabs(
-                                collect($locales)->map(fn (string $locale) => Tab::make(strtoupper($locale))
-                                    ->schema([
-                                        Forms\Components\TextInput::make("translations.{$locale}.subject")
-                                            ->label('Subject')
-                                            ->required($locale === config('filament-mail.template_editor.default_locale', 'en')),
-                                        Forms\Components\Textarea::make("translations.{$locale}.html_body")
-                                            ->label('HTML Body')
-                                            ->required($locale === config('filament-mail.template_editor.default_locale', 'en'))
-                                            ->rows(15),
-                                        Forms\Components\Textarea::make("translations.{$locale}.text_body")
-                                            ->label('Plain Text Body')
-                                            ->rows(8),
-                                    ])
-                                )->all()
-                            ),
+                        Forms\Components\TextInput::make('subject')
+                            ->label('Subject')
+                            ->required(),
+                        Forms\Components\Textarea::make('html_body')
+                            ->label('HTML Body')
+                            ->required()
+                            ->rows(15),
+                        Forms\Components\Textarea::make('text_body')
+                            ->label('Plain Text Body')
+                            ->rows(8),
                     ]),
 
                 Section::make('Variables')
@@ -184,8 +176,6 @@ class MailTemplateResource extends Resource
 
     public static function infolist(Infolist $infolist): Infolist
     {
-        $locales = config('filament-mail.template_editor.locales', ['en']);
-
         return $infolist
             ->schema([
                 \Filament\Infolists\Components\Section::make('Details')
@@ -206,21 +196,11 @@ class MailTemplateResource extends Resource
                             ->placeholder('—'),
                     ]),
 
-                \Filament\Infolists\Components\Section::make('Preview by Locale')
+                \Filament\Infolists\Components\Section::make('Preview')
                     ->schema([
-                        \Filament\Infolists\Components\Tabs::make('preview_tabs')
-                            ->tabs(
-                                collect($locales)->map(function (string $locale) {
-                                    return \Filament\Infolists\Components\Tabs\Tab::make(strtoupper($locale))
-                                        ->schema([
-                                            ViewEntry::make("preview_{$locale}")
-                                                ->view('filament-mail::components.template-preview-entry', [
-                                                    'locale' => $locale,
-                                                ])
-                                                ->columnSpanFull(),
-                                        ]);
-                                })->all()
-                            ),
+                        ViewEntry::make('preview')
+                            ->view('filament-mail::components.template-preview-entry')
+                            ->columnSpanFull(),
                     ]),
 
                 \Filament\Infolists\Components\Section::make('Variables')

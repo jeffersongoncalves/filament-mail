@@ -9,6 +9,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\EditRecord\Concerns\Translatable;
 use Illuminate\Support\Facades\Mail;
 use JeffersonGoncalves\FilamentMail\Resources\MailTemplateResource;
 use JeffersonGoncalves\LaravelMail\Actions\PreviewTemplateAction;
@@ -16,37 +17,17 @@ use JeffersonGoncalves\LaravelMail\Mail\TemplateNotificationMailable;
 
 class EditMailTemplate extends EditRecord
 {
+    use Translatable;
+
     protected static string $resource = MailTemplateResource::class;
-
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        $record = $this->record;
-        $locales = config('filament-mail.template_editor.locales', ['en']);
-        $translations = [];
-
-        foreach ($locales as $locale) {
-            $translations[$locale] = [
-                'subject' => $record->getTranslations('subject')[$locale] ?? '',
-                'html_body' => $record->getTranslations('html_body')[$locale] ?? '',
-                'text_body' => $record->getTranslations('text_body')[$locale] ?? '',
-            ];
-        }
-
-        $data['translations'] = $translations;
-
-        return $data;
-    }
-
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        return CreateMailTemplate::processTranslations($data);
-    }
 
     protected function getHeaderActions(): array
     {
         $locales = config('filament-mail.template_editor.locales', ['en']);
 
         return [
+            Actions\LocaleSwitcher::make(),
+
             Actions\Action::make('preview')
                 ->label('Preview')
                 ->icon('heroicon-o-eye')
