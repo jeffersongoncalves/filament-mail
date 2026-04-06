@@ -6,14 +6,16 @@ namespace JeffersonGoncalves\FilamentMail\Pages;
 
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
-use Filament\Pages\Dashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
+use Filament\Pages\Page;
+use Filament\Widgets\Widget;
+use Filament\Widgets\WidgetConfiguration;
 use JeffersonGoncalves\FilamentMail\FilamentMailPlugin;
 use JeffersonGoncalves\FilamentMail\Widgets\MailAnalyticsChart;
 use JeffersonGoncalves\FilamentMail\Widgets\MailDeliveryRateChart;
 use JeffersonGoncalves\FilamentMail\Widgets\MailStatsOverview;
 
-class MailDashboard extends Dashboard
+class MailDashboard extends Page
 {
     use HasFiltersForm;
 
@@ -46,6 +48,9 @@ class MailDashboard extends Dashboard
         ]);
     }
 
+    /**
+     * @return array<class-string<Widget>|WidgetConfiguration>
+     */
     public function getWidgets(): array
     {
         return [
@@ -55,7 +60,18 @@ class MailDashboard extends Dashboard
         ];
     }
 
-    public function getColumns(): int|array
+    /**
+     * @return array<class-string<Widget>|WidgetConfiguration>
+     */
+    public function getVisibleWidgets(): array
+    {
+        return $this->filterVisibleWidgets($this->getWidgets());
+    }
+
+    /**
+     * @return int|string|array<string, int|string|null>
+     */
+    public function getColumns(): int|string|array
     {
         return [
             'sm' => 1,
