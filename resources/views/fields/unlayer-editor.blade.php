@@ -15,6 +15,15 @@
         $pathParts = explode('.', $statePath);
         array_pop($pathParts);
         $designPath = implode('.', array_merge($pathParts, ['body_design']));
+
+        $unlayerOptions = [
+            'displayMode' => 'email',
+            'mergeTags' => $mergeTags,
+        ];
+
+        if ($projectId) {
+            $unlayerOptions['projectId'] = $projectId;
+        }
     @endphp
 
     <div
@@ -41,19 +50,12 @@
                 if (!container) return;
 
                 const isDark = document.documentElement.classList.contains('dark');
+                const options = @js($unlayerOptions);
 
-                const options = {
-                    id: container.id,
-                    displayMode: 'email',
-                    appearance: {
-                        theme: isDark ? 'modern_dark' : 'modern_light',
-                    },
-                    mergeTags: @js($mergeTags),
+                options.id = container.id;
+                options.appearance = {
+                    theme: isDark ? 'modern_dark' : 'modern_light',
                 };
-
-                @if($projectId)
-                    options.projectId = @js($projectId);
-                @endif
 
                 unlayer.init(options);
                 this.editor = unlayer;
