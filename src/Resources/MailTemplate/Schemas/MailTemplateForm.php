@@ -7,6 +7,7 @@ namespace JeffersonGoncalves\FilamentMail\Resources\MailTemplate\Schemas;
 use Filament\Forms;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use JeffersonGoncalves\FilamentMail\Contracts\TemplateEditorContract;
 
 class MailTemplateForm
 {
@@ -47,10 +48,7 @@ class MailTemplateForm
                         Forms\Components\TextInput::make('subject')
                             ->label('Subject')
                             ->required(),
-                        Forms\Components\Textarea::make('html_body')
-                            ->label('HTML Body')
-                            ->required()
-                            ->rows(15),
+                        app(TemplateEditorContract::class)->getFormField('html_body'),
                         Forms\Components\Textarea::make('text_body')
                             ->label('Plain Text Body')
                             ->rows(8),
