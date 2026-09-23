@@ -2,6 +2,22 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 2.4.0 - 2026-09-23
+
+### What's new
+
+- **Translations:** 17 new locales (ar, az, de, es, fa, fr, hi, it, ja, nl, pl, pt, ru, tr, uk, uz, zh_CN). (#10)
+
+Thanks to @Elvin-Qulizade (Elvin Qulizada) for the i18n initiative behind these translations — first contributed in jeffersongoncalves/filament-scanner-guard#2 and now rolled out across the Filament plugins. He is credited as co-author.
+
+### What's Changed
+
+* chore(deps-dev): bump the npm-deps group with 2 updates by @dependabot[bot] in https://github.com/jeffersongoncalves/filament-mail/pull/4
+* chore(deps): bump the actions-deps group with 2 updates by @dependabot[bot] in https://github.com/jeffersongoncalves/filament-mail/pull/5
+* feat(i18n): add translations (2.x) by @jeffersongoncalves in https://github.com/jeffersongoncalves/filament-mail/pull/10
+
+**Full Changelog**: https://github.com/jeffersongoncalves/filament-mail/compare/2.3.5...2.4.0
+
 ## 2.3.5 - 2026-04-06
 
 ### Changed
