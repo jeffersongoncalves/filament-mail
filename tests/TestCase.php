@@ -46,6 +46,9 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function setUpDatabase(): void
     {
+        // Real databases (MySQL/PostgreSQL in CI) keep tables and rows between tests.
+        Schema::dropAllTables();
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
