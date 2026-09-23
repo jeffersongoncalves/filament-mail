@@ -38,11 +38,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('database.default', 'testing');
-        $app['config']->set('database.connections.testing', [
-            'driver' => 'sqlite',
-            'database' => ':memory:',
-            'prefix' => '',
-        ]);
+        $app['config']->set('database.connections.testing', $this->testing_connection());
 
         $app['config']->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
         $app['config']->set('filament-mail.template_editor.locales', ['en', 'pt_BR']);
@@ -131,5 +127,36 @@ abstract class TestCase extends OrchestraTestCase
             $table->timestamp('occurred_at')->nullable();
             $table->timestamps();
         });
+    }
+
+    /**
+     * The original in-memory SQLite connection by default; CI (tests.yml) sets
+     * MAIL_TEST_DB_* to run the same suite on MySQL and PostgreSQL. Not DB_CONNECTION:
+     * Testbench pins it to "testing", which would always win over a driver read from it.
+     *
+     * @return array<string, mixed>
+     */
+    protected function testing_connection(): array
+    {
+        $driver = env('MAIL_TEST_DB_DRIVER', 'sqlite');
+
+        if ($driver === 'sqlite') {
+            return [
+                'driver' => 'sqlite',
+                'database' => ':memory:',
+                'prefix' => '',
+            ];
+        }
+
+        return [
+            'driver' => $driver,
+            'host' => env('MAIL_TEST_DB_HOST', '127.0.0.1'),
+            'port' => env('MAIL_TEST_DB_PORT'),
+            'database' => env('MAIL_TEST_DB_DATABASE', 'testing'),
+            'username' => env('MAIL_TEST_DB_USERNAME', 'root'),
+            'password' => env('MAIL_TEST_DB_PASSWORD', ''),
+            'charset' => $driver === 'pgsql' ? 'utf8' : 'utf8mb4',
+            'prefix' => '',
+        ];
     }
 }
