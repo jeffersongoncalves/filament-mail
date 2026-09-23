@@ -17,7 +17,40 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
-    name: PHP 8.4 - Laravel 13
+    strategy:
+      fail-fast: false
+      matrix:
+        database: [sqlite, mysql, pgsql]
+
+    name: PHP 8.4 - Laravel 13 - ${{ matrix.database }}
+
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: testing
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testing
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd=pg_isready
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout code
@@ -35,5 +68,28 @@ jobs:
           composer require "laravel/framework:^13.0" "orchestra/testbench:^11.0" "pestphp/pest:^4.0" "pestphp/pest-plugin-laravel:^4.0" --dev --no-interaction --no-update
           composer update --prefer-stable --prefer-dist --no-interaction
 
-      - name: Run tests
+      - name: Run tests (sqlite)
+        if: matrix.database == 'sqlite'
+        run: vendor/bin/pest --no-coverage
+
+      - name: Run tests (mysql)
+        if: matrix.database == 'mysql'
+        env:
+          MAIL_TEST_DB_DRIVER: 'mysql'
+          MAIL_TEST_DB_HOST: '127.0.0.1'
+          MAIL_TEST_DB_PORT: '3306'
+          MAIL_TEST_DB_USERNAME: 'root'
+          MAIL_TEST_DB_PASSWORD: ''
+          MAIL_TEST_DB_DATABASE: 'testing'
+        run: vendor/bin/pest --no-coverage
+
+      - name: Run tests (pgsql)
+        if: matrix.database == 'pgsql'
+        env:
+          MAIL_TEST_DB_DRIVER: 'pgsql'
+          MAIL_TEST_DB_HOST: '127.0.0.1'
+          MAIL_TEST_DB_PORT: '5432'
+          MAIL_TEST_DB_USERNAME: 'postgres'
+          MAIL_TEST_DB_PASSWORD: 'postgres'
+          MAIL_TEST_DB_DATABASE: 'testing'
         run: vendor/bin/pest --no-coverage
