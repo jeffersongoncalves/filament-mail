@@ -15,9 +15,6 @@ parameters:
             message: '#should return static\(.+\) but returns#'
             reportUnmatched: false
         -
-            message: '#Parameter \#1 \$view of .+ expects view-string\|null, string given#'
-            reportUnmatched: false
-        -
             message: '#Call to static method make\(\) on an unknown class#'
             reportUnmatched: false
         -
