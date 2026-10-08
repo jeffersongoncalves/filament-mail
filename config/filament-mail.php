@@ -66,6 +66,11 @@ return [
         'enabled' => true,
     ],
 
+    // Campaigns page: laravel-mail campaign reports per mail tag (needs laravel-mail's campaigns.enabled).
+    'campaigns' => [
+        'enabled' => true,
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Navigation
