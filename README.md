@@ -33,6 +33,7 @@ Complete email management UI for Filament. Built on top of [jeffersongoncalves/l
 - **Send Test Email** — Send test emails from any template with locale selection
 - **Delivery Tracking** — View tracking events (delivered, bounced, opened, clicked, complained) from 5 providers
 - **Analytics Dashboard** — Stats overview, daily analytics chart, and delivery rate chart with period filters
+- **Campaigns** — Per-campaign (mail tag) delivery, open, click and click-to-open rates, all campaigns side by side and the most clicked links
 - **Suppression Management** — Manage suppressed emails (hard bounces, complaints, manual suppressions)
 - **Multi-tenant** — Optional tenant scoping for all queries
 - **Configurable** — Disable/enable individual resources, widgets, and pages
@@ -108,6 +109,7 @@ FilamentMailPlugin::make()
     ->statsWidgets()              // Enable/disable stats widgets
     ->analyticsWidget()           // Enable/disable analytics charts
     ->dashboard()                 // Enable/disable dashboard page
+    ->campaigns()                 // Enable/disable campaigns page
     ->tenantScoping()             // Enable/disable tenant scoping
 ```
 
@@ -119,6 +121,16 @@ FilamentMailPlugin::make()
     ->analyticsWidget(false)          // Disable analytics charts
     ->dashboard(false)                // Disable dashboard page
 ```
+
+### Campaigns
+
+The **Campaigns** page reports [laravel-mail's campaigns](https://github.com/jeffersongoncalves/laravel-mail#campaign-reports): a campaign is a mail tag (`$mailable->tag('black-friday')` or Envelope `tags`). Turn the tracking on in laravel-mail (and publish + run its `add_tags_to_mail_logs_table` migration):
+
+```dotenv
+LARAVEL_MAIL_CAMPAIGNS_ENABLED=true
+```
+
+The page shows, for the chosen period, every campaign with its sent count and open / click / bounce rates; the selected campaign (the latest by default) gets delivery, open, click, click-to-open, bounce and complaint stats plus its most clicked links. Opens and clicks come from pixel tracking or provider webhooks.
 
 ## Configuration
 

@@ -7,6 +7,7 @@ namespace JeffersonGoncalves\FilamentMail;
 use Closure;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use JeffersonGoncalves\FilamentMail\Pages\MailCampaigns;
 use JeffersonGoncalves\FilamentMail\Pages\MailDashboard;
 use JeffersonGoncalves\FilamentMail\Resources\MailLogResource;
 use JeffersonGoncalves\FilamentMail\Resources\MailSuppressionResource;
@@ -28,6 +29,8 @@ class FilamentMailPlugin implements Plugin
     protected bool|Closure $hasAnalyticsWidget = true;
 
     protected bool|Closure $hasDashboard = true;
+
+    protected bool|Closure $hasCampaigns = true;
 
     protected string|Closure $navigationGroup = 'Email';
 
@@ -62,6 +65,10 @@ class FilamentMailPlugin implements Plugin
 
         if ($this->evaluate($this->hasDashboard) && config('filament-mail.dashboard.enabled', true)) {
             $pages[] = MailDashboard::class;
+        }
+
+        if ($this->evaluate($this->hasCampaigns) && config('filament-mail.campaigns.enabled', true)) {
+            $pages[] = MailCampaigns::class;
         }
 
         if ($this->evaluate($this->hasStatsWidgets) && config('filament-mail.widgets.stats_overview', true)) {
@@ -136,6 +143,14 @@ class FilamentMailPlugin implements Plugin
     public function dashboard(bool|Closure $condition = true): static
     {
         $this->hasDashboard = $condition;
+
+        return $this;
+    }
+
+    /** The campaigns page (laravel-mail campaign reports by mail tag). */
+    public function campaigns(bool|Closure $condition = true): static
+    {
+        $this->hasCampaigns = $condition;
 
         return $this;
     }
