@@ -4,8 +4,16 @@ declare(strict_types=1);
 
 namespace JeffersonGoncalves\FilamentMail\Tests;
 
+use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
+use BladeUI\Icons\BladeIconsServiceProvider;
+use Filament\Actions\ActionsServiceProvider;
 use Filament\FilamentServiceProvider;
+use Filament\Forms\FormsServiceProvider;
+use Filament\Infolists\InfolistsServiceProvider;
+use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
+use Filament\Tables\TablesServiceProvider;
+use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use JeffersonGoncalves\FilamentMail\FilamentMailServiceProvider;
@@ -25,9 +33,25 @@ abstract class TestCase extends OrchestraTestCase
 
     protected function getPackageProviders($app): array
     {
+        // Version-specific providers: Filament 4+ ships the schema components in the Schemas provider;
+        // Filament 3 views need the @capture directive provider.
+        $versionSpecific = array_values(array_filter([
+            'Filament\\Schemas\\SchemasServiceProvider',
+            'RyanChandler\\BladeCaptureDirective\\BladeCaptureDirectiveServiceProvider',
+        ], 'class_exists'));
+
         return [
+            ...$versionSpecific,
             LivewireServiceProvider::class,
             SupportServiceProvider::class,
+            BladeIconsServiceProvider::class,
+            BladeHeroiconsServiceProvider::class,
+            ActionsServiceProvider::class,
+            FormsServiceProvider::class,
+            InfolistsServiceProvider::class,
+            NotificationsServiceProvider::class,
+            TablesServiceProvider::class,
+            WidgetsServiceProvider::class,
             FilamentServiceProvider::class,
             TestPanelProvider::class,
             LaravelMailServiceProvider::class,
@@ -101,6 +125,7 @@ abstract class TestCase extends OrchestraTestCase
             $table->json('headers')->nullable();
             $table->json('attachments')->nullable();
             $table->json('metadata')->nullable();
+            $table->json('tags')->nullable();
             $table->string('provider_message_id')->nullable();
             $table->foreignUuid('mail_template_id')->nullable()->constrained('mail_templates')->nullOnDelete();
             $table->string('tenant_id')->nullable();
