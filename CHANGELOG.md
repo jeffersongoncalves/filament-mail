@@ -2,6 +2,10 @@
 
 All notable changes to `filament-mail` will be documented in this file.
 
+## 3.5.0 - 2026-10-08
+
+Campaigns page: per-campaign (mail tag) delivery, open, click, click-to-open, bounce and complaint rates, all campaigns side by side and the most clicked links. Requires jeffersongoncalves/laravel-mail ^1.4 with campaigns enabled.
+
 ## 3.4.0 - 2026-09-23
 
 ### What's new
